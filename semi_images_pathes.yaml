@@ -1,0 +1,8 @@
+path: /home/student/HW1/semi_sup_data
+train: train
+val: val
+
+names:
+  0: Empty
+  1: Tweezers
+  2: Needle_driver

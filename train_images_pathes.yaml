@@ -1,0 +1,8 @@
+path: /datashare/HW1/labeled_image_data
+train: images/train
+val: images/val
+
+names:
+  0: Empty
+  1: Tweezers
+  2: Needle_driver
