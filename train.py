@@ -3,6 +3,7 @@ import torch
 import video_classification as vc
 import video_managment
 import os
+import shutil
 
 def create_needed_folders(folder_path):
     if not os.path.exists(folder_path):
@@ -10,6 +11,15 @@ def create_needed_folders(folder_path):
         print(f'Folder created: {folder_path}')
     else:
         print(f'Folder already exists: {folder_path}')
+
+def copy_files(source_dir, destination_dir):
+    for filename in os.listdir(source_dir):
+        source_file = os.path.join(source_dir, filename)
+        destination_file = os.path.join(destination_dir, filename)
+        if os.path.isfile(source_file):
+            shutil.copy(source_file, destination_file)
+
+    print(f"All files have been copied from {source_dir} to {destination_dir}")
 
 create_needed_folders('./video_frames')
 create_needed_folders('./video_frames/4_2_24_B_2')
@@ -21,12 +31,22 @@ create_needed_folders('./predictions_text/20_2_24_1')
 
 create_needed_folders('./prediction_mean_conf')
 
+create_needed_folders('./semi_sup_data')
+create_needed_folders('./semi_sup_data/train')
+create_needed_folders('./semi_sup_data/train/images')
+create_needed_folders('./semi_sup_data/train/labels')
+create_needed_folders('./semi_sup_data/val')
+create_needed_folders('./semi_sup_data/val/images')
+create_needed_folders('./semi_sup_data/val/labels')
+copy_files('/datashare/HW1/labeled_image_data/images/val', './semi_sup_data/val/images')
+copy_files('/datashare/HW1/labeled_image_data/labels/val', './semi_sup_data/val/labels')
+
 
 vc.return_files_to_original_folder()# clear the semi_sup_data folder
 video_managment.seperate_videos() # seperate given videos to frames
 
 # Load a model
-model = YOLO("yolov8.pt")  # load a pretrained model (recommended for training)
+model = YOLO("yolov8n.pt")  # load a pretrained model (recommended for training)
 
 
 cuda_available = torch.cuda.is_available()
