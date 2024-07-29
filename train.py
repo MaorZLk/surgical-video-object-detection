@@ -2,6 +2,25 @@ from ultralytics import YOLO
 import torch
 import video_classification as vc
 import video_managment
+import os
+
+def create_needed_folders(folder_path):
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+        print(f'Folder created: {folder_path}')
+    else:
+        print(f'Folder already exists: {folder_path}')
+
+create_needed_folders('./video_frames')
+create_needed_folders('./video_frames/4_2_24_B_2')
+create_needed_folders('./video_frames/20_2_24_1')
+
+create_needed_folders('./predictions_text')
+create_needed_folders('./predictions_text/4_2_24_B_2')
+create_needed_folders('./predictions_text/20_2_24_1')
+
+create_needed_folders('./prediction_mean_conf')
+
 
 vc.return_files_to_original_folder()# clear the semi_sup_data folder
 video_managment.seperate_videos() # seperate given videos to frames
